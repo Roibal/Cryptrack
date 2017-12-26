@@ -3,7 +3,7 @@ Python Cryptocurrency Portfolio
 
 Requires:
 > Python 3.5 or greater
-> ConfigParser
+> Various libraries; ConfigParser,requests, etc - just pip install what you're missing.
 
 Commands:
 > add <symbol> <entry_amount> <entry_price>; e.g add XLM 2500 0.16 
