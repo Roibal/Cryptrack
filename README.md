@@ -2,7 +2,7 @@
 Python Cryptocurrency Portfolio
 
 Requires:
-> Python 3.5+
+> Python 3.5 or greater
 > ConfigParser
 
 Commands:
