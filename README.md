@@ -18,5 +18,5 @@ Example output of show:
 
 
 Help:
-To run via Powershell, type: python cryptrack.py 
-Python is required to run this; see: https://www.python.org/downloads/release/python-360/
+>To run via Powershell, type: python cryptrack.py 
+>Python is required to run this; see: https://www.python.org/downloads/release/python-360/
