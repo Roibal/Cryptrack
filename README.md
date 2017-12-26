@@ -2,7 +2,6 @@
 Python Cryptocurrency Portfolio
 
 Requires:
-> Various libraries; ConfigParser,requests, etc - just pip install what you're missing.
 > Python 3.5+
 
 Commands:
