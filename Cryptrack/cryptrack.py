@@ -2,12 +2,10 @@ import requests
 import random
 import datetime
 import time
-import configparser
+from configparser import ConfigParser
 import string
 import json
 import sys
-from collections import namedtuple
-from optparse import OptionParser
 
 ####################################################
 # Cryptrack
@@ -43,11 +41,6 @@ def iniRead(section):
 	return (entry_val, amount_val)
 
 def iniAddEntry(sectionName, amount, entry):
-	
-	try:
-	    from configparser import ConfigParser
-	except ImportError:
-	    from ConfigParser import ConfigParser  # ver. < 3.0
 
 	# instantiate
 	config = ConfigParser()
@@ -62,11 +55,6 @@ def iniAddEntry(sectionName, amount, entry):
 		config.write(configfile)
 
 def iniUpdateEntry(sectionName, amount, entry):
-	
-	try:
-	    from configparser import ConfigParser
-	except ImportError:
-	    from ConfigParser import ConfigParser  # ver. < 3.0
 
 	# instantiate
 	config = ConfigParser()
@@ -87,11 +75,6 @@ def iniUpdateEntry(sectionName, amount, entry):
 
 def iniDeleteEntry(sectionName):
 
-	try:
-	    from configparser import ConfigParser
-	except ImportError:
-	    from ConfigParser import ConfigParser  # ver. < 3.0
-
 	# instantiate
 	config = ConfigParser()
 
@@ -108,11 +91,6 @@ def iniDeleteEntry(sectionName):
 	    config.write(configfile)
 
 def iniSections():
-
-	try:
-	    from configparser import ConfigParser
-	except ImportError:
-	    from ConfigParser import ConfigParser  # ver. < 3.0
 
 	# instantiate
 	config = ConfigParser()
@@ -140,6 +118,7 @@ class currency(object):
 		r = s.get('https://api.coinmarketcap.com/v1/ticker/')
 		full_data = json.loads(r.text)
 
+		# json mingling
 		if (req_name is not ""):	
 			for item in full_data:
 				name = item.get("symbol")
@@ -235,7 +214,6 @@ if __name__ == '__main__':
 		if (str(command[0:4]) == "show"):
 			c = 1
 			currList = iniSections()
-			currObjs = []
 
 			for i in currList:
 				data = currency.request(i)
@@ -247,7 +225,7 @@ if __name__ == '__main__':
 
 				start_price = val*ent
 				current_price = float(c.price_usd)*ent
-				delta = (float(c.price_usd)*ent) - (val*ent)
+				delta = round((float(c.price_usd)*ent) - (val*ent), 3)
 
 				print (c.name + " $" + c.price_usd + " " + 
 					"[" + c.percent_change_1h  + "% h]" +
