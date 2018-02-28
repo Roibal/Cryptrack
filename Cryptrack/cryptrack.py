@@ -161,10 +161,10 @@ class currency(object):
 if __name__ == '__main__':
 	while True:
 		command = input("Enter command: ")
-		c = 0
+		help = true
 
 		if (str(command[0:4]) == "help"):
-			c = 1
+			help = false
 			print ("""> supported commands: \n 
 				add <symbol> <entry_amount> <entry_price>; e.g add XLM 2500 0.16 \n
 				remove <symbol>; e.g remove XLM \n
@@ -173,7 +173,7 @@ if __name__ == '__main__':
 				quit; exit\n
 				""")
 		if (str(command[0:3]) == "add"):
-			c = 1
+			help = false
 			s = str(command).split(' ')
 
 			if (len(s) == 4):
@@ -189,7 +189,7 @@ if __name__ == '__main__':
 				print ("invalid parameters for:" + str(command[0:3]))
 
 		if (str(command[0:6]) == "remove"):
-			c = 1
+			help = false
 			s = str(command).split(' ')
 
 			if (len(s) == 2):
@@ -199,7 +199,7 @@ if __name__ == '__main__':
 				print ("invalid parameters for:" + str(command[0:6]))
 
 		if (str(command[0:6]) == "update"):
-			c = 1
+			help = false
 			s = str(command).split(' ')
 
 			if (len(s) == 4):
@@ -212,7 +212,7 @@ if __name__ == '__main__':
 				print ("invalid parameters for:" + str(command[0:6]))
 
 		if (str(command[0:4]) == "show"):
-			c = 1
+			help = false
 			currList = iniSections()
 
 			for i in currList:
@@ -234,16 +234,16 @@ if __name__ == '__main__':
 					" Delta: $" + str(delta))
 
 		if (str(command[0:4]) == "list"):
-			c = 1
+			help = false
 			print (iniSections())
 		
 		if (str(command[0:4]) == "quit"):
-			c = 1
+			help = false
 			sys.exit(0)
 
 		
 
-		if (c == 0):
+		if (help):
 			print ("unsupported command.\n\n")
 			print ("""> supported commands: \n 
 				add <symbol> <entry_amount> <entry_price>; e.g add XLM 2500 0.16 \n
