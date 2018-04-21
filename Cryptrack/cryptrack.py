@@ -10,10 +10,10 @@ import sys
 ####################################################
 # Cryptrack
 # Author: Henry Wrightman
-# Version: 1.0.0
+# Version: 1.0.1
 # 12/10/17
-#
-#
+# Modified 4/21/2018 by Joaquin Roibal @ BlockchainEng
+# Changes: Fixed True/False (capitalization)
 ###################################################
 
 
@@ -161,10 +161,10 @@ class currency(object):
 if __name__ == '__main__':
 	while True:
 		command = input("Enter command: ")
-		help = true
+		help = True
 
 		if (str(command[0:4]) == "help"):
-			help = false
+			help = False
 			print ("""> supported commands: \n 
 				add <symbol> <entry_amount> <entry_price>; e.g add XLM 2500 0.16 \n
 				remove <symbol>; e.g remove XLM \n
@@ -173,7 +173,7 @@ if __name__ == '__main__':
 				quit; exit\n
 				""")
 		if (str(command[0:3]) == "add"):
-			help = false
+			help = False
 			s = str(command).split(' ')
 
 			if (len(s) == 4):
@@ -189,7 +189,7 @@ if __name__ == '__main__':
 				print ("invalid parameters for:" + str(command[0:3]))
 
 		if (str(command[0:6]) == "remove"):
-			help = false
+			help = False
 			s = str(command).split(' ')
 
 			if (len(s) == 2):
@@ -199,7 +199,7 @@ if __name__ == '__main__':
 				print ("invalid parameters for:" + str(command[0:6]))
 
 		if (str(command[0:6]) == "update"):
-			help = false
+			help = False
 			s = str(command).split(' ')
 
 			if (len(s) == 4):
@@ -212,7 +212,7 @@ if __name__ == '__main__':
 				print ("invalid parameters for:" + str(command[0:6]))
 
 		if (str(command[0:4]) == "show"):
-			help = false
+			help = False
 			currList = iniSections()
 
 			for i in currList:
@@ -234,14 +234,12 @@ if __name__ == '__main__':
 					" Delta: $" + str(delta))
 
 		if (str(command[0:4]) == "list"):
-			help = false
+			help = False
 			print (iniSections())
 		
 		if (str(command[0:4]) == "quit"):
-			help = false
+			help = False
 			sys.exit(0)
-
-		
 
 		if (help):
 			print ("unsupported command.\n\n")
