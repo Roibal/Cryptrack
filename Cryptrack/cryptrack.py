@@ -159,7 +159,7 @@ class currency(object):
 ###################################################
 ###################################################
 if __name__ == '__main__':
-	list_of_commands = ['help', 'add', 'remove', 'update', 'buy', 'sell', 'list', 'show', 'quit']
+	list_of_commands = ['help', 'add', 'remove', 'update', 'buy', 'sell', 'list', 'show', 'quit', 'create_portfolio']
 	command = "help"
 	while 1:
 
@@ -167,12 +167,16 @@ if __name__ == '__main__':
 			print ("""\n \n > supported commands: \n
 				add <symbol> <entry_amount> <entry_price> ; e.g add XLM 2500 0.16 \n
 				remove <symbol>; e.g remove XLM \n
+				buy/sell <symbol> <amount> <price>; will update portfolio amounts \n
+				create_portfolio <initial deposit in USD>; will create a portfolio \n
 				list; will list portfolio symbols \n
 				show; will output portfolio statistics \n
 				quit; exit\n
 				""")
 		command = input("Enter command: ")
-		if (str(command.lower()) == list_of_commands[1]):
+		comm = command.split(' ')
+		if (str(comm[0].lower()) == list_of_commands[1]):
+            #Add functionality
 			s = str(command).split(' ')
 
 			if (len(s) == 4):
@@ -188,7 +192,23 @@ if __name__ == '__main__':
 			else:
 				print ("invalid parameters for:" + str(command[0:3]))
 
-		if (str(command.lower()) == list_of_commands[2]):
+		if (str(comm[0].lower()) == list_of_commands[9]):
+            #Create Portfolio Function
+			s = str(command).split(' ')
+
+			if (len(s) == 2):
+				acr = 'USDT'
+
+				if (acr in iniSections()):
+					print ("entry already exists. Consider the update command.")
+				else:
+					amount = s[1]
+					entry = '1'
+					iniAddEntry(acr, amount, entry)
+			else:
+				print ("invalid parameters for:" + str(command[0:3]))
+
+		if (str(comm[0].lower()) == list_of_commands[2]):
 			s = str(command).split(' ')
 
 			if (len(s) == 2):
@@ -197,7 +217,7 @@ if __name__ == '__main__':
 			else:
 				print ("invalid parameters for:" + str(command[0:6]))
 
-		if (str(command.lower()) == list_of_commands[3]):
+		if (str(comm[0].lower()) == list_of_commands[3]):
 			s = str(command).split(' ')
 
 			if (len(s) == 4):
@@ -209,10 +229,11 @@ if __name__ == '__main__':
 			else:
 				print ("invalid parameters for:" + str(command[0:6]))
 
-		if (str(command.lower()) == list_of_commands[6]):
-			help = False
+		if (str(comm[0].lower()) == list_of_commands[6]):
+            #Functionality from List
 			currList = iniSections()
-
+			portfolio_start= 0
+			portfolio_curr_total = 0
 			for i in currList:
 				data = currency.request(i)
 				c = currency(data)
@@ -222,7 +243,9 @@ if __name__ == '__main__':
 				ent = read[1]
 
 				start_price = val*ent
+				portfolio_start += start_price
 				current_price = float(c.price_usd)*ent
+				portfolio_curr_total += current_price
 				delta = round((float(c.price_usd)*ent) - (val*ent), 3)
 
 				print (c.name + " $" + c.price_usd + " " + 
@@ -230,12 +253,15 @@ if __name__ == '__main__':
 					"[" + c.percent_change_24h + "% d]" +
 					"[" + c.percent_change_7d + "% w] |" +
 					" Delta: $" + str(delta))
+			print("\n Portfolio Statistics (USDT): \nPortfolio Start: $", portfolio_start, "\nPortfolio Current: $", portfolio_curr_total)
 
-		if (str(command[0:4]) == list_of_commands[7]):
+		if (str(comm[0].lower()) == list_of_commands[7]):
+            #Show
 			print (iniSections())
 		
-		if (str(command[0:4]) == list_of_commands[8]):
+		if (str(comm[0].lower()) == list_of_commands[8]):
+            #Quit
 			sys.exit(0)
 
-		elif command not in list_of_commands:
-			print ("unsupported command.\n\n")
+		elif comm[0] not in list_of_commands:
+			print ("unsupported command. Please Try Again!\n\n")
