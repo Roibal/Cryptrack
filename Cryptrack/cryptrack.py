@@ -12,9 +12,15 @@ import sys
 # Author: Henry Wrightman
 # Version: 1.0.1
 # 12/10/17
-# Modified 4/21/2018 by Joaquin Roibal @ BlockchainEng
-# Changes: 	-Fixed True/False (capitalization)
-#			-Added Date/Time Context with Buy & Sell
+#
+# 4/21/2018 Modified by Joaquin Roibal @BlockchainEng
+# Changes: 	-Fixed True/False (capitalization) [removed functionality]
+#			-Added Date/Time Context with Buy & Sell [will need further development]
+#           -Buy-Sell Functionality (future development)
+#           -Add Cryptocurrency 'Basket' (future development)
+#           -Added Portfolio Functionality
+#           -Added Instructional Youtube Video: https://youtu.be/DFCDVrAmyR4
+#           -Will Incorporate with Algo Trading Bot
 ###################################################
 
 
@@ -209,6 +215,7 @@ if __name__ == '__main__':
 				print ("invalid parameters for:" + str(command[0:3]))
 
 		if (str(comm[0].lower()) == list_of_commands[2]):
+			#Remove Functionality
 			s = str(command).split(' ')
 
 			if (len(s) == 2):
@@ -218,6 +225,7 @@ if __name__ == '__main__':
 				print ("invalid parameters for:" + str(command[0:6]))
 
 		if (str(comm[0].lower()) == list_of_commands[3]):
+			#Update Functionality
 			s = str(command).split(' ')
 
 			if (len(s) == 4):
@@ -229,8 +237,8 @@ if __name__ == '__main__':
 			else:
 				print ("invalid parameters for:" + str(command[0:6]))
 
-		if (str(comm[0].lower()) == list_of_commands[6]):
-            #Functionality from List
+		if (str(comm[0].lower()) == list_of_commands[7]):
+            #Functionality from Show
 			currList = iniSections()
 			portfolio_start= 0
 			portfolio_curr_total = 0
@@ -253,10 +261,14 @@ if __name__ == '__main__':
 					"[" + c.percent_change_24h + "% d]" +
 					"[" + c.percent_change_7d + "% w] |" +
 					" Delta: $" + str(delta))
-			print("\n Portfolio Statistics (USDT): \nPortfolio Start: $", portfolio_start, "\nPortfolio Current: $", portfolio_curr_total)
+			print("\nPortfolio Statistics (USD): \nPortfolio Start: $", portfolio_start, "\nPortfolio Current: $", portfolio_curr_total)
+			profit_loss = portfolio_curr_total-portfolio_start
+			print("Profit/Loss: $", round(profit_loss, 2))
+			port_perc_change = (profit_loss)/portfolio_start
+			print("Percent Change: ", round(port_perc_change*100,3), "%")
 
-		if (str(comm[0].lower()) == list_of_commands[7]):
-            #Show
+		if (str(comm[0].lower()) == list_of_commands[6]):
+            #List
 			print (iniSections())
 		
 		if (str(comm[0].lower()) == list_of_commands[8]):
