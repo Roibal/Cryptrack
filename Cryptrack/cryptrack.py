@@ -201,7 +201,8 @@ def create_index(portfolio_amount = '250000', num_coins = '25'):
                 pass
             else:
                 amount = position_size/float(coin[2])
-                buy_coin(coin[0], amount, coin[2], 'April_21_index_portfolio.ini')
+                #create new Date_index_portfolio.ini (blank) to use
+                buy_coin(coin[0], amount, coin[2], 'DATE_index_portfolio.ini')
     print("Create Index Completed")
     #Calculate Current Statistics (ROR, Price, Volume) for Total at current date & time
         #incorporated with 'show' functionality
