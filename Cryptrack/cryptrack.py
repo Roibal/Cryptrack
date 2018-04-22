@@ -13,7 +13,8 @@ import sys
 # Version: 1.0.1
 # 12/10/17
 # Modified 4/21/2018 by Joaquin Roibal @ BlockchainEng
-# Changes: Fixed True/False (capitalization)
+# Changes: 	-Fixed True/False (capitalization)
+#			-Added Date/Time Context with Buy & Sell
 ###################################################
 
 
@@ -37,7 +38,7 @@ def iniRead(section):
 	# read values from a section
 	entry_val = config.getfloat(section, 'entry')
 	amount_val = config.getfloat(section, 'amount')
-
+	#print(entry_val, amount_val)
 	return (entry_val, amount_val)
 
 def iniAddEntry(sectionName, amount, entry):
@@ -49,7 +50,6 @@ def iniAddEntry(sectionName, amount, entry):
 	config.add_section(sectionName)
 	config.set(sectionName, 'entry', entry)
 	config.set(sectionName, 'amount', amount)
-
 	# save to a file
 	with open('portfolio.ini', 'a') as configfile:
 		config.write(configfile)
@@ -159,21 +159,20 @@ class currency(object):
 ###################################################
 ###################################################
 if __name__ == '__main__':
-	while True:
-		command = input("Enter command: ")
-		help = True
+	list_of_commands = ['help', 'add', 'remove', 'update', 'buy', 'sell', 'list', 'show', 'quit']
+	command = "help"
+	while 1:
 
-		if (str(command[0:4]) == "help"):
-			help = False
-			print ("""> supported commands: \n 
-				add <symbol> <entry_amount> <entry_price>; e.g add XLM 2500 0.16 \n
+		if (str(command.lower()) == list_of_commands[0]):
+			print ("""\n \n > supported commands: \n
+				add <symbol> <entry_amount> <entry_price> ; e.g add XLM 2500 0.16 \n
 				remove <symbol>; e.g remove XLM \n
 				list; will list portfolio symbols \n
 				show; will output portfolio statistics \n
 				quit; exit\n
 				""")
-		if (str(command[0:3]) == "add"):
-			help = False
+		command = input("Enter command: ")
+		if (str(command.lower()) == list_of_commands[1]):
 			s = str(command).split(' ')
 
 			if (len(s) == 4):
@@ -184,12 +183,12 @@ if __name__ == '__main__':
 				else:
 					amount = s[2]	
 					entry = s[3]
+
 					iniAddEntry(acr, amount, entry)
 			else:
 				print ("invalid parameters for:" + str(command[0:3]))
 
-		if (str(command[0:6]) == "remove"):
-			help = False
+		if (str(command.lower()) == list_of_commands[2]):
 			s = str(command).split(' ')
 
 			if (len(s) == 2):
@@ -198,8 +197,7 @@ if __name__ == '__main__':
 			else:
 				print ("invalid parameters for:" + str(command[0:6]))
 
-		if (str(command[0:6]) == "update"):
-			help = False
+		if (str(command.lower()) == list_of_commands[3]):
 			s = str(command).split(' ')
 
 			if (len(s) == 4):
@@ -211,7 +209,7 @@ if __name__ == '__main__':
 			else:
 				print ("invalid parameters for:" + str(command[0:6]))
 
-		if (str(command[0:4]) == "show"):
+		if (str(command.lower()) == list_of_commands[6]):
 			help = False
 			currList = iniSections()
 
@@ -233,21 +231,11 @@ if __name__ == '__main__':
 					"[" + c.percent_change_7d + "% w] |" +
 					" Delta: $" + str(delta))
 
-		if (str(command[0:4]) == "list"):
-			help = False
+		if (str(command[0:4]) == list_of_commands[7]):
 			print (iniSections())
 		
-		if (str(command[0:4]) == "quit"):
-			help = False
+		if (str(command[0:4]) == list_of_commands[8]):
 			sys.exit(0)
 
-		if (help):
+		elif command not in list_of_commands:
 			print ("unsupported command.\n\n")
-			print ("""> supported commands: \n 
-				add <symbol> <entry_amount> <entry_price>; e.g add XLM 2500 0.16 \n
-				remove <symbol>; e.g remove XLM \n
-				update <symbol> <entry_amount> <entry_price>; \n
-				list; will list portfolio symbols \n
-				show; will output portfolio statistics \n
-				quit; exit\n
-				""")
